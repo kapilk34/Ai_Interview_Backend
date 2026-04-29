@@ -1,10 +1,15 @@
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+
+dotenv.config()
+
 const isAuth = async (req, res, next) =>{
     try {
         let token = req.cookies.token;
         if(!token) {
             return res.status(401).json({message: "Unauthorized, user does not have token"})
         }
-        const verifyToken = jwt.verify(token, Process.env.JWT_SECRET)
+        const verifyToken = jwt.verify(token, process.env.JWT_SECRET)
         if(!verifyToken){
             return res.status(401).json({message: "Unauthorized, user does not have valid token"})
         }
